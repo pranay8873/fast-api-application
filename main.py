@@ -17,10 +17,10 @@ def get_db():
 
 
 # Criminal endpoints
-@app.post("/criminals/")
+@app.post("/criminals/",response_model=schemas.Criminal)
 def create_criminal(criminal: schemas.Criminal, db: Session = Depends(get_db)):
     db_criminal = crud.create_criminal(db=db, criminal=criminal)
-    return "created successfully"
+    return db_criminal
 
 
 @app.get("/criminals/{criminal_id}", response_model=schemas.Criminal)

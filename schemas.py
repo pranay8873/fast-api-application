@@ -22,3 +22,8 @@ class Police(BaseModel):
 
     class Config:
         from_attributes = True
+class lawywe(BaseModel):
+    id: Optional[int] = None
+    name: str
+    age: int
+    gender: str
