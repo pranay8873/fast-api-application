@@ -3,7 +3,7 @@ import models, schemas
 
 
 # Criminal CRUD operations
-def create_criminal(db: Session, criminal: schemas.Criminal):
+def create_criminal(db: Session, criminal: schemas.Criminal_Register):
     db_criminal = models.Criminal(
         name=criminal.name,
         age=criminal.age,
@@ -24,8 +24,8 @@ def get_all_criminals(db: Session):
     return db.query(models.Criminal).all()
 
 
-def update_criminal(db: Session, criminal_id: int, criminal: schemas.Criminal):
-    db_criminal = db.query(models.Criminal).filter(models.Criminal.id == criminal_id).first()
+def update_criminal(db: Session, criminal: schemas.Criminal_Response):
+    db_criminal = db.query(models.Criminal).filter(models.Criminal.id == criminal.id).first()
     if db_criminal:
         db_criminal.name = criminal.name
         db_criminal.age = criminal.age
@@ -45,7 +45,7 @@ def delete_criminal(db: Session, criminal_id: int):
 
 
 # Police CRUD operations
-def create_police(db: Session, police: schemas.Police):
+def create_police(db: Session, police: schemas.Police_Register):
     db_police = models.Police(
         name=police.name,
         age=police.age,
@@ -84,3 +84,40 @@ def delete_police(db: Session, police_id: int):
         db.delete(db_police)
         db.commit()
     return db_police
+
+#Lawyer CRUD operations
+def create_lawyer(db:Session,lawyer:schemas.Lawyer_Register):
+    db_lawyer=models.Lawyer(
+        name=lawyer.name,
+        age=lawyer.age,
+        gender=lawyer.gender,
+        role=lawyer.role
+    )
+    db.add(db_lawyer)
+    db.commit()
+    db.refresh(db_lawyer)
+    return db_lawyer
+
+def get_lawyer(db:Session,lawyer_id:int):
+    return db.query(models.Lawyer).filter(models.Lawyer.id==lawyer_id).first()
+
+def get_all_lawyers(db:Session):
+    return db.query(models.Lawyer).all()
+
+def update_lawyer(db:Session,lawyer_id:int,lawyer:schemas.Lawyer_Response):
+    db_lawyer=db.query(models.Lawyer).filter(models.Lawyer.id==lawyer_id).first()
+    if db_lawyer:
+        db_lawyer.name=lawyer.name
+        db_lawyer.age=lawyer.age
+        db_lawyer.gender=lawyer.gender
+        db_lawyer.role=lawyer.role
+        db.commit()
+        db.refresh(db_lawyer)
+    return db_lawyer
+
+def delete_lawyer(db:Session,lawyer_id:int):
+    db_lawyer=db.query(models.Lawyer).filter(models.Lawyer.id==lawyer_id).first()
+    if db_lawyer:
+        db.delete(db_lawyer)
+        db.commit()
+    return db_lawyer
