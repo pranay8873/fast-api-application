@@ -87,12 +87,32 @@ def delete_police(police_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Police not found")
     return {"message": "Police deleted successfully"}
 
+@app.post("/lawyer/", response_model=schemas.Lawyer_Response)
+def create_lawyer(lawyer:schemas.lawyer_Register,db:Session=Depends(get_db)):
+    db_lawyer=crud.create_lawyer(db=db,lawyer=lawyer)
+    return db_lawyer
 
-@app.get("/")
-def read_root():
-    return {"message": "Criminal Records API is running"}
+@app.get("/lawyer/{lawyer_id}", response_model=schemas.Lawyer_Response)
+def get_lawyer(lawyer_id: int, db: Session = Depends(get_db)):
+    db_lawyer = crud.get_lawyer(db=db, lawyer_id=lawyer_id)
+    if db_lawyer is None:
+        raise HTTPException(status_code=404, detail="Lawyer not found")
+    return db_lawyer
 
+@app.get("/lawyer/", response_model=list[schemas.Lawyer_Response])
+def get_all_lawyers(db: Session = Depends(get_db)):
+    return crud.get_all_lawyers(db=db)
 
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
+@app.put("/lawyer/{lawyer_id}", response_model=schemas.Lawyer_Response)
+def update_lawyer(lawyer_id: int, lawyer: schemas.Lawyer_Response, db: Session = Depends(get_db)):
+    db_lawyer = crud.update_lawyer(db=db, lawyer_id=lawyer_id, lawyer=lawyer)
+    if db_lawyer is None:
+        raise HTTPException(status_code=404, detail="Lawyer not found")
+    return db_lawyer
+
+@app.delete("/lawyer/{lawyer_id}")
+def delete_lawyer(lawyer_id: int, db: Session = Depends(get_db)):
+    db_lawyer = crud.delete_lawyer(db=db, lawyer_id=lawyer_id)
+    if db_lawyer is None:
+        raise HTTPException(status_code=404, detail="Lawyer not found")
+    return {"message": "Lawyer deleted successfully"}
