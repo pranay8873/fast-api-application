@@ -27,3 +27,5 @@ class lawywe(BaseModel):
     name: str
     age: int
     gender: str
+    class Config:
+        from_attributes = True
