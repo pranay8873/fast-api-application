@@ -26,6 +26,15 @@ class Lawyer(Base):
     gender=Column(String(50))
     role=Column(String(50))
 
+class Judge(Base):
+    __tablename__="judges"
+    id=Column(Integer,primary_key=True,index=True)
+    name=Column(String(100))
+    age=Column(Integer)
+    gender=Column(String(50))
+    role=Column(String(50))
+    
+
     
 
 
