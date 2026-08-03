@@ -121,3 +121,39 @@ def delete_lawyer(db:Session,lawyer_id:int):
         db.delete(db_lawyer)
         db.commit()
     return db_lawyer
+
+def create_judge(db:Session,judge:schemas.Judge_Register):
+    db_judge=models.Judge(
+        name=judge.name,
+        age=judge.age,
+        gender=judge.gender,
+        role=judge.role
+    )
+    db.add(db_judge)
+    db.commit()
+    db.refresh(db_judge)
+    return db_judge
+
+def get_judge(db:Session,judge_id:int):
+    return db.query(models.Judge).filter(models.Judge.id==judge_id).first()
+
+def get_all_judges(db:Session):
+    return db.query(models.Judge).all()
+
+def update_judge(db:Session,judge_id:int,judge:schemas.Judge_Response):
+    db_judge=db.query(models.Judge).filter(models.Judge.id==judge_id).first()
+    if db_judge:
+        db_judge.name=judge.name
+        db_judge.age=judge.age
+        db_judge.gender=judge.gender
+        db_judge.role=judge.role
+        db.commit()
+        db.refresh(db_judge)
+    return db_judge 
+
+def delete_judge(db:Session,judge_id:int):
+    db_judge=db.query(models.Judge).filter(models.Judge.id==judge_id).first()
+    if db_judge:
+        db.delete(db_judge)
+        db.commit()
+    return db_judge
