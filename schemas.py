@@ -58,3 +58,20 @@ class Lawyer_Response(BaseModel):
     role:str
     class Config:
         from_attributes = True
+
+class Judge_Register(BaseModel):
+    name:str
+    age:int
+    gender:str
+    role:str
+    class Config:
+        from_attributes = True
+
+class Judge_Response(BaseModel):
+    id:int
+    name:str
+    age:int
+    gender:str
+    role:str
+    class Config:
+        from_attributes = True
