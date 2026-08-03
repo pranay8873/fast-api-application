@@ -132,3 +132,16 @@ def get_judge(judge_id: int, db: Session = Depends(get_db)):
 @app.get("/judge/", response_model=list[schemas.Judge_Response])
 def get_all_judges(db: Session = Depends(get_db)):
     return crud.get_all_judges(db=db)
+
+@app.put("/judge/{judge_id}", response_model=schemas.Judge_Response)
+def update_judge(judge_id: int, judge: schemas.Judge_Response, db: Session = Depends(get_db)):
+    db_judge = crud.update_judge(db=db, judge_id=judge_id, judge=judge)
+    if db_judge is None:
+        raise HTTPException(status_code=404, detail="Judge not found")
+    return db_judge
+@app.delete("/judge/{judge_id}")
+def delete_judge(judge_id: int, db: Session = Depends(get_db)):
+    db_judge = crud.delete_judge(db=db, judge_id=judge_id)
+    if db_judge is None:
+        raise HTTPException(status_code=404, detail="Judge not found")
+    return {"message": "Judge deleted successfully"}    
