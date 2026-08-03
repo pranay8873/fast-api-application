@@ -116,3 +116,19 @@ def delete_lawyer(lawyer_id: int, db: Session = Depends(get_db)):
     if db_lawyer is None:
         raise HTTPException(status_code=404, detail="Lawyer not found")
     return {"message": "Lawyer deleted successfully"}
+
+@app.post("/judge/", response_model=schemas.Judge_Response)
+def create_judge(judge:schemas.Judge_Register,db:Session=Depends(get_db)):
+    db_judge=crud.create_judge(db=db,judge=judge)
+    return db_judge
+
+@app.get("/judge/{judge_id}", response_model=schemas.Judge_Response)    
+def get_judge(judge_id: int, db: Session = Depends(get_db)):
+    db_judge = crud.get_judge(db=db, judge_id=judge_id)
+    if db_judge is None:
+        raise HTTPException(status_code=404, detail="Judge not found")
+    return db_judge
+
+@app.get("/judge/", response_model=list[schemas.Judge_Response])
+def get_all_judges(db: Session = Depends(get_db)):
+    return crud.get_all_judges(db=db)
