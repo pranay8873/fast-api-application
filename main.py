@@ -145,3 +145,28 @@ def delete_judge(judge_id: int, db: Session = Depends(get_db)):
     if db_judge is None:
         raise HTTPException(status_code=404, detail="Judge not found")
     return {"message": "Judge deleted successfully"}    
+
+def create_app_developer(app_developer:schemas.app_developer,db:Session=Depends(get_db)):
+    db_app_developer=crud.create_app_developer(db=db,app_developer=app_developer)
+    return db_app_developer
+
+def get_app_developer(app_developer_id:int,db:Session=Depends(get_db)):
+    db_app_developer=crud.get_app_developer(db=db,app_developer_id=app_developer_id)
+    if db_app_developer is None:
+        raise HTTPException(status_code=404, detail="App Developer not found")
+    return db_app_developer
+
+def get_all_app_developers(db:Session=Depends(get_db)):
+    return crud.get_all_app_developers(db=db)
+
+def update_app_developer(app_developer_id:int,app_developer:schemas.app_developer,db:Session=Depends(get_db)):
+    db_app_developer=crud.update_app_developer(db=db,app_developer_id=app_developer_id,app_developer=app_developer)
+    if db_app_developer is None:
+        raise HTTPException(status_code=404, detail="App Developer not found")
+    return db_app_developer
+
+def delete_app_developer(app_developer_id:int,db:Session=Depends(get_db)):
+    db_app_developer=crud.delete_app_developer(db=db,app_developer_id=app_developer_id)
+    if db_app_developer is None:
+        raise HTTPException(status_code=404, detail="App Developer not found")
+    return {"message": "App Developer deleted successfully"}
