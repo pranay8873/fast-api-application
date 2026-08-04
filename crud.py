@@ -157,3 +157,39 @@ def delete_judge(db:Session,judge_id:int):
         db.delete(db_judge)
         db.commit()
     return db_judge
+
+def create_app_developer(db:Session,app_developer:schemas.app_developer):
+    db_app_developer=models.app_developer(
+        name=app_developer.name,
+        age=app_developer.age,
+        gender=app_developer.gender,
+        role=app_developer.role
+    )
+    db.add(db_app_developer)    
+    db.commit()
+    db.refresh(db_app_developer)
+    return db_app_developer 
+
+def get_app_developer(db:Session,app_developer_id:int):
+    return db.query(models.app_developer).filter(models.app_developer.id==app_developer_id).first()
+
+def get_all_app_developers(db:Session):
+    return db.query(models.app_developer).all()
+
+def update_app_developer(db:Session,app_developer_id:int,app_developer:schemas.app_developer):
+    db_app_developer=db.query(models.app_developer).filter(models.app_developer.id==app_developer_id).first()
+    if db_app_developer:
+        db_app_developer.name=app_developer.name
+        db_app_developer.age=app_developer.age
+        db_app_developer.gender=app_developer.gender
+        db_app_developer.role=app_developer.role
+        db.commit()
+        db.refresh(db_app_developer)
+    return db_app_developer
+
+def delete_app_developer(db:Session,app_developer_id:int):
+    db_app_developer=db.query(models.app_developer).filter(models.app_developer.id==app_developer_id).first()
+    if db_app_developer:
+        db.delete(db_app_developer)
+        db.commit()
+    return db_app_developer
