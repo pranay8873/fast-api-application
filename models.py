@@ -33,6 +33,14 @@ class Judge(Base):
     age=Column(Integer)
     gender=Column(String(50))
     role=Column(String(50))
+
+class app_developer(Base):
+    __tablename__="app_developers"
+    id=Column(Integer,primary_key=True,index=True)
+    name=Column(String(100))
+    age=Column(Integer)
+    gender=Column(String(50))
+    role=Column(String(50))
     
 
     
