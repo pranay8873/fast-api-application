@@ -2,10 +2,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 
+import os
+from sqlalchemy import create_engine
 
-# database_url = os.getenv("DATABASE_URL")
-database_url = "mysql+pymysql://root:root@localhost:3306/criminal_records"
-engine=create_engine(database_url)
+# Fallback to local connection for local development
+DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:password@localhost:3306/your_db")
+
+engine = create_engine(DATABASE_URL)
 SessionLocal=sessionmaker(
     autocommit=False,
     autoflush=False,
