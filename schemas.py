@@ -75,3 +75,12 @@ class Judge_Response(BaseModel):
     role:str
     class Config:
         from_attributes = True
+
+
+class app_developer(BaseModel):
+    name:str
+    age:int
+    gender:str
+    role:str
+    class Config:
+        from_attributes = True
